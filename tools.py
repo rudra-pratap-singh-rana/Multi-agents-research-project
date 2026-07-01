@@ -7,8 +7,15 @@ from dotenv import load_dotenv
 from rich import print
 
 load_dotenv()
+try:
+    import streamlit as st
+    tavily_key = st.secrets.get("TAVILY_API_KEY") or os.getenv("TAVILY_API_KEY")
+except Exception:
+    tavily_key = os.getenv("TAVILY_API_KEY")
 
-tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+tavily = TavilyClient(api_key=tavily_key)
+
+# tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
 
 
 @tool
